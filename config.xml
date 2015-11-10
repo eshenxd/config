@@ -1,21 +1,17 @@
 <?xml version="1.0"?>
 <opencv_storage>
-<!-- ÅäÖÃÎÄ¼þ -->
-<Config>
-  <cardphotopath>D:/photo/</cardphotopath>
-  <copypath>D:/copypath2</copypath>
-  <savepath>D:/FacesData/</savepath>
-  <up_hour>12</up_hour>
-  <up_minute>0</up_minute>
-  <up_second>0</up_second>
-  <delete_hour>12</delete_hour>
-  <delete_minute>0</delete_minute>
-  <delete_second>0</delete_second>
-  <FD_iterations>5</FD_iterations>
-  <show_width>800</show_width>
-  <show_height>600</show_height>
-  <pic_width>128</pic_width>
-  <pic_height>96</pic_height>
-  <window_scale>1.0000000000000001e-001</window_scale>
-  <filesum>1</filesum></Config>
+<cardphotopath>D:/photo</cardphotopath>
+<copypath>D:/photoCopy</copypath>
+<savepath>D:/FaceData</savepath>
+<up_hour>12</up_hour>
+<up_minute>0</up_minute>
+<delete_hour>12</delete_hour>
+<delete_minute>0</delete_minute>
+<FD_iterations>5</FD_iterations>
+<show_width>800</show_width>
+<show_height>600</show_height>
+<pic_width>128</pic_width>
+<pic_height>96</pic_height>
+<window_scale>0.1</window_scale>
+<filesum>1</filesum>
 </opencv_storage>

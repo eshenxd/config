@@ -1,106 +1,64 @@
 #include "config.h"
 
-using namespace std;
+using std::string;
+using std::vector;
+using namespace cv;
 
-//初始化程序配置参数
-void _Config::initConfigInfo(string configfilePath){
+void _Config::initConfigInfo(string configfilePath)
+{
 	path = configfilePath;
+	FileStorage fs_r = FileStorage(path ,FileStorage::READ);
 
-	begin_photo_count = 0;
-	year = month = day = hour = minute = second = 0;
+	fs_r["cardphotopath"] >> card_photo_path;
+	fs_r["copypath"] >> copy_path;
+	fs_r["savepath"] >> save_path;
 
-	CvFileNode *node;
-	CvFileStorage *fs = cvOpenFileStorage(path.c_str(),0,CV_STORAGE_READ);
-	node = cvGetFileNodeByName(fs,0,"Config");
+	fs_r["up_hour"] >> up_hour;
+	fs_r["up_minute"] >> up_minute;
 
-	card_photo_path = cvReadStringByName(fs,node,"cardphotopath");
-	copy_path = cvReadStringByName(fs,node,"copypath");
-	save_path = cvReadStringByName(fs,node,"savepath");
+	fs_r["delete_hour"] >> delete_hour;
+	fs_r["delete_minute"] >> delete_minute;
 
-	up_hour = cvReadIntByName(fs,node,"up_hour");
-	up_minute = cvReadIntByName(fs,node,"up_minute");
-    up_second = cvReadIntByName(fs,node,"up_second");
+	fs_r["FD_iterations"] >> FD_iterations;
 
-	delete_hour = cvReadIntByName(fs,node,"delete_hour");
-	delete_minute = cvReadIntByName(fs,node,"delete_minute");
-	delete_second = cvReadIntByName(fs,node,"delete_second");
+	fs_r["show_width"] >> show_width;
+	fs_r["show_height"] >> show_height;
 
-	FD_iterations = cvReadIntByName(fs,node,"FD_iterations");
+	fs_r["pic_width"] >> pic_width;
+	fs_r["pic_height"] >> pic_height;
 
-	show_width = cvReadIntByName(fs,node,"show_width");
-	show_height = cvReadIntByName(fs,node,"show_height");
+	fs_r["window_scale"] >> window_scale;
+	fs_r["filesum"] >> filesum;
 
-	pic_width = cvReadIntByName(fs,node,"pic_width");
-	pic_height = cvReadIntByName(fs,node,"pic_height");
-
-	window_scale = cvReadRealByName(fs,node,"window_scale");
-
-	filesum = cvReadIntByName(fs,node,"filesum");
-
-	cvReleaseFileStorage(&fs);
+	fs_r.release();
 }
 
-void _Config::readconfiginfo(string name,string& info){
+void _Config::writeconfiginfo()
+{
+	FileStorage fs_w = FileStorage(path,FileStorage::WRITE);
 	
-	CvFileNode *node;
-	CvFileStorage *fs = cvOpenFileStorage(path.c_str(),0,CV_STORAGE_READ);
-	node = cvGetFileNodeByName(fs,0,"Config");
+	fs_w << "cardphotopath" << card_photo_path;
+	fs_w <<"copypath" << copy_path;
+	fs_w <<"savepath" << save_path;
 
-	info = cvReadStringByName(fs,node,name.c_str());
-}
-
-void _Config::readconfiginfo(std::string name,int& info){
-
-	CvFileNode *node;
-	CvFileStorage *fs = cvOpenFileStorage(path.c_str(),0,CV_STORAGE_READ);
-	node = cvGetFileNodeByName(fs,0,"Config");
-
-	info = cvReadIntByName(fs,node,name.c_str());
-}
-
-void _Config::readconfiginfo(std::string name,double& info ){
-	CvFileNode *node;
-	CvFileStorage *fs = cvOpenFileStorage(path.c_str(),0,CV_STORAGE_READ);
-	node = cvGetFileNodeByName(fs,0,"Config");
-
-	info = cvReadRealByName(fs,node,name.c_str());
-}
-
-
-void _Config::writeconfiginfo(){
+	fs_w <<"up_hour" << up_hour;
+	fs_w <<"up_minute" << up_minute;
 	
-	CvFileStorage *fs = cvOpenFileStorage(path.c_str(),0,CV_STORAGE_WRITE);
+	fs_w << "delete_hour" << delete_hour;
+	fs_w << "delete_minute" << delete_minute;
 
-	cvWriteComment(fs,"配置文件",1);
-	cvStartWriteStruct(fs,"Config",CV_NODE_MAP);
+	fs_w << "FD_iterations" << FD_iterations;
 
-	cvWriteString(fs,"cardphotopath",card_photo_path.c_str());
-	cvWriteString(fs,"copypath",copy_path.c_str());
-	cvWriteString(fs,"savepath",save_path.c_str());
-	cvWriteInt(fs,"up_hour",up_hour);
-	cvWriteInt(fs,"up_minute",up_minute);
-	cvWriteInt(fs,"up_second",up_second);
+	fs_w << "show_width" << show_width;
+	fs_w << "show_height" << show_height;
 
-	cvWriteInt(fs,"delete_hour",delete_hour);
-	cvWriteInt(fs,"delete_minute",delete_minute);
-	cvWriteInt(fs,"delete_second",delete_second);
+	fs_w << "pic_width" << pic_width;
+	fs_w << "pic_height" << pic_height;
 
-	cvWriteInt(fs,"FD_iterations",FD_iterations);
+	fs_w << "window_scale" << window_scale;
 
-	cvWriteInt(fs,"show_width",show_width);
-	cvWriteInt(fs,"show_height",show_height);
+	fs_w << "filesum" << filesum;
 
-	cvWriteInt(fs,"pic_width",pic_width);
-	cvWriteInt(fs,"pic_height",pic_height);
+	fs_w.release();
 
-	cvWriteReal(fs,"window_scale",window_scale);
-
-	
-
-	cvWriteInt(fs,"filesum",filesum);
-
-	cvEndWriteStruct(fs);
-	cvReleaseFileStorage(&fs);
 }
-
-

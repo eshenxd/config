@@ -5,7 +5,7 @@
 			  writeconfiginfo：写配置文件
  *	代码作者：Ethan
  *	编辑时间：2015-09-25
- *	修改时间：v1.0(2015-09-25)
-              完成主要功能的实现，需要包含的头文件header.h见
-			  https://github.com/eshenxd/header_file/blob/master/header.h
+ *	修改时间：
+ *            v1.0(2015-09-25)完成主要功能的实现，需要包含的头文件header.h见 https://github.com/eshenxd/header_file/blob/master/header.h
+ *			  v2.0(2015-11-10)更改了主体实现，使用opencv C++方法
  */
